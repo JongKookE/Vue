@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // ... 3개를 쓰는 문법이 3dot operation이라고 함
+      // Rest Operator
+      //   {
+      //     let obj = {
+      //       a: 1,
+      //       b: 2,
+      //       c: 3,
+      //     };
+      //     // 객체는 하나고 객체를 가르키는 obj2
+      //     let obj2 = obj;
+      //     console.log(obj2);
+      //     obj.b = 4;
+      //     console.log(obj2);
+      //   }
+
+      //   {
+      //     let obj = {
+      //       a: 1,
+      //       b: 2,
+      //       c: 3,
+      //     };
+      //     let { ...obj2 } = obj; // 같은 객체를 가르키는게 아닌 객체를 복사
+      //     console.log(obj2);
+      //     obj.b = 4;
+      //     console.log(obj2);
+      //   }
+
+      //   {
+      //     let obj = { a: 1, b: 2, c: 3, d: "4" };
+      //     let { a, x, ...obj2 } = obj;
+      //     // 앞의 속성이 일치하면 값이 그대로 복사되어 넘겨오는데 속성이 다르면 undefined, 그리고 나머지 객체들은 그대로 복사되어 넘어온다.
+      //     console.log(a, x, obj2);
+      //   }
+
+      //   {
+      // Array는 속성이 없기 때문에 앞에서 부터 순서대로 맞춰줌
+      //     let arr = [1, 2, 3, 4, 5];
+      //     let [c, d, ...arr2] = arr;
+      //     console.log(c, d, arr2); // -> 1 2 [3, 4, 5]
+      //   }
+      // Spread Operator
+
+      {
+        let s1 = { name: "홍길동", phone: "010-1111-1111", age: 10 };
+        let s2 = { phone: "010-2222-2222", age: 20 };
+        let s3 = { phone: "010-3333-3333" };
+
+        let s4 = { ...s1 }; // 복사
+        let s5 = { ...s1, ...s3 };
+        let s6 = { ...s3, ...s2 };
+
+        console.log(s4);
+        console.log(s5);
+        console.log(s6);
+      }
+
+      {
+        let arr = [1, 2, 3, 4, 5];
+        let arr2 = [3, 4, 5, 6, 7];
+
+        let arr3 = [...arr, ...arr2];
+        console.log(arr3);
+      }
+    </script>
+  </body>
+</html>

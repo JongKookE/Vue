@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <!-- 콧수염 문법을 사용하면 return 을 하지 않아도 자동으로 렌더링해줌 -->
+    <div id="app">{{message}} {{message.split("").reverse().join("")}};</div>
+    <h1>Composition API (setup())</h1>
+    <script>
+      const { createApp, ref } = Vue;
+
+      //   let model = { message: "Hello Vue JS!!!" };
+
+      let app = createApp({
+        // setup() 은 반드시 객체를 반환해야함
+        setup() {
+          const message = ref("Hello Vue JS!!!");
+          console.log(message.value);
+          return {
+            message,
+          };
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

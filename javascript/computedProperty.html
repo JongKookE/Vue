@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let name = "gender";
+      let value = "M";
+
+      // 객체의 property 설정을 변수가 가지는 값으로!!
+      let obj = {
+        [name]: value,
+      };
+      console.log(obj);
+
+      // 함수
+      function myProp() {
+        return "gender";
+      }
+
+      function myValue() {
+        return "F";
+      }
+      let obj2 = {
+        [myProp()]: myValue(),
+      };
+      console.log(obj2);
+    </script>
+  </body>
+</html>

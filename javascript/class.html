@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script>
+      class MyClass {
+        // constructor(id, name, email){
+        //     this.id = id;
+        //     this.name = name;
+        //     this.email = email;
+        // }
+
+        // 생성자에 객체를 전달하는 방식이 더 일반적, 생성자는 1개만 가질수있다.
+        constructor(obj) {
+          this.id = obj.id;
+          this.name = obj.name;
+          this.email = obj.email;
+        }
+
+        // 메소드
+        aboutMe() {
+          let aboutMeText = `${this.id} ${this.name} ${this.email}`;
+          console.log(aboutMeText);
+          if (this.ui == undefined) {
+            console.log("ui is undefined");
+          } else {
+            this.ui.innerText = aboutMeText;
+          }
+        }
+        mount(ui) {
+          // 멤버변수가 추가
+          this.ui = document.querySelector(ui);
+          return this;
+        }
+      }
+
+      new MyClass({
+        id: 1,
+        name: "홍길동",
+        email: "gildong@hong.com",
+      })
+        .mount("#app")
+        .aboutMe();
+    </script>
+  </body>
+</html>

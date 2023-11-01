@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let name = "홍길동";
+      let phone = "010-6282-4392";
+      let age = 20;
+
+      // 일반적인 객체 property
+      let person = {
+        a: name,
+        b: phone,
+        c: age,
+      };
+      console.log(person);
+
+      // 일반적인 객체 property인데 이름과 변수명이 같을 경우, 지금처럼 두번 쓰지 말고
+      let person2 = {
+        name: name,
+        phone: phone,
+        age: age,
+      };
+
+      console.log(person2);
+      // shortHandProperty
+      // 지금처럼 한번만 사용해도 됌
+      let person3 = {
+        name,
+        phone,
+        age,
+      };
+
+      console.log(person3);
+      let address = "My Addr";
+      let person4 = {
+        name,
+        phone,
+        age,
+        address,
+      };
+
+      console.log(person4);
+
+      let { ...person5 } = person4;
+    </script>
+  </body>
+</html>

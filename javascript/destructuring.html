@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //   {
+      //     let numbers = [0, 1, 2, 3, 4];
+      //     let [a, b, c, d, e] = numbers;
+      //     console.log(a, b, c, d, e);
+      //   }
+      //   {
+      //     let numbers = [0, 1, 2, 3, 4];
+      //     let [a, b, ...c] = numbers;
+      //     console.log(a, b, c);
+      //     console.log(numbers);
+      //   }
+      //   {
+      //     let text = "Hello";
+      //     let [a, b, c, ...d] = text;
+      //     console.log(a, b, c);
+      //     console.log();
+      //   }
+      //   {
+      //     let [a = 3, b = 4, c] = [1, , 5];
+      //     console.log(a, b, c);
+      //   }
+      //   {
+      //     let a = "Hello";
+      //     let b = "world";
+
+      //     [a, b] = [b, a];
+      //     console.log(a, b);
+      //   }
+      // Object
+      //   {
+      //     let obj = { name: "홍길동", phone: "010-1111-1111", age: 10 };
+      //     let { name, phone } = obj;
+      //     console.log(name, phone);
+      //     let { name: c, phone: d } = obj;
+      //     console.log(d, c);
+      //   }
+      {
+        // getJson();
+        // normalJson();
+        // destructuring();
+        // taehoJson();
+        destructuring();
+      }
+      //   async function getJson() {
+      //     let response = await fetch("./fetchResult.json");
+      //     let data = await response.json();
+      //     console.log(data);
+      //     destructuring 을 사용하지 않는 경우
+      //     let members = data.members;
+      //     console.log(members);
+
+      //     destructuring 을 사용하는 경우
+      //     let { members } = data;
+      //     console.log(members);
+      //   }
+      // destructuring 을 더 줄여쓰는 방법
+
+      //   async function getJson() {
+      //     let response = await fetch("./fetchResult.json");
+      //     let { members } = await response.json();
+      //     console.log(members);
+      //   }
+
+      //   async function normalJson() {
+      //     let response = await fetch("fetchResult.json");
+      //     let data = await response.json();
+
+      //     let members = data.members;
+      //     console.log(members);
+      //   }
+      async function destructuring() {
+        let response = await fetch("fetchResult.json");
+        let { members } = await response.json();
+        // let [...name] = members.map((el) => el.name);
+        // console.log(name);
+      }
+
+      //   async function taehoJson() {
+      //     let response = await fetch("taeho.json");
+      //     let { title } = await response.json();
+
+      //     console.log(title);
+      //   }
+    </script>
+  </body>
+</html>
