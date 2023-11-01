@@ -7,6 +7,20 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">{{text}}</div>
+    <script>
+      console.log(Vue);
+      const { createApp, ref } = Vue;
+      // Vue App 기본 메소드인 createApp() 를 호출하면서 App 관련된 다양한 내용을 객체로 전달
+      // 전달되는 객체는 setup() 을 구성하고 객체를 리턴
+      const app = createApp({
+        setup() {
+          const text = ref("Hello, Vue.JS!!");
+          return {
+            text,
+          };
+        },
+      }).mount("#app");
+    </script>
   </body>
 </html>
