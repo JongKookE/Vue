@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Emp Main</title>
+    </head>
+    <body>
+        <div id="app">
+            <h1>Student 관리</h1>
+            <hr />
+            <table>
+                <thead>
+                    <tr>
+                        <td>employee Id</td>
+                        <td>employee lastName</td>
+                        <td>employee firstName</td>
+                        <td>email</td>
+                        <td>hireDate</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        v-for="(emp, index) in employeeList"
+                        :key="index"
+                        @click="detail(emp.employeeId)"
+                    >
+                        <td>{{emp.employeeId}}</td>
+                        <td>{{emp.lastName}}</td>
+                        <td>{{emp.firstName}}</td>
+                        <td>{{emp.email}}</td>
+                        <td>{{emp.hireDate}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr />
+            <table>
+                <tbody>
+                    <tr>
+                        <td>StudentNm</td>
+                        <td><input v-model="detailInfo.employeeId" /></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><input v-model="detailInfo.email" /></td>
+                    </tr>
+                    <tr>
+                        <td>hireDate</td>
+                        <td><input v-model="detailInfo.hireDate" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="border: 1px; margin: auto; text-align: center">
+            <button @click="">등록</button>
+            <button id="btnUpdate">수정</button>
+            <button id="btnDelete">삭제</button>
+            <button id="btnClear">초기화</button>
+            <button id="btnSort">정렬</button>
+            <button id="btnGenerateViews">랜덤 조회수 생성기</button>
+        </div>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script>
+            const { createApp, ref } = Vue;
+
+            const app = createApp({
+                setup() {
+                    const detailInfo = ref({});
+                    const employeeList = ref([]);
+                    const detail = async function (employeeId) {
+                        console.log("detail()");
+
+                        try {
+                            let response = await fetch(
+                                "http://localhost:8080/emps/" + employeeId
+                            );
+                            let data = await response.json();
+                            detailInfo.value = data;
+                            console.log(data);
+                        } catch (error) {
+                            console.error(error);
+                        }
+                    };
+
+                    const list = async () => {
+                        try {
+                            let response = await fetch(
+                                "http://localhost:8080/emps"
+                            );
+                            let data = await response.json();
+                            employeeList.value = data;
+                            console.log(employeeList);
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    };
+
+                    list();
+                    return {
+                        detail,
+                        detailInfo,
+                        employeeList,
+                    };
+                },
+            }).mount("#app");
+        </script>
+    </body>
+</html>

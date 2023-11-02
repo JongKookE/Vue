@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      {{text}}
+      <div v-if="flagIf">v-if !!</div>
+      <div v-show="flagShow">v-show !!</div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      const { createApp, ref } = Vue;
+
+      const app = createApp({
+        setup() {
+          const text = ref("Hello, Vue!!");
+          const flagIf = ref(false);
+          const flagShow = ref(false);
+          return {
+            text,
+            flagIf,
+            flagShow,
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

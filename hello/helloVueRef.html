@@ -4,10 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   </head>
   <body>
-    <div id="app">{{text}}</div>
+    <div id="app">
+      {{ text }}
+      <button @click="changeText">변경</button>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
       console.log(Vue);
       const { createApp, ref } = Vue;
@@ -15,9 +18,19 @@
       // 전달되는 객체는 setup() 을 구성하고 객체를 리턴
       const app = createApp({
         setup() {
+          // 페이지에서 사용할 data를 reactive하게 만드는 작업
+          // 초기 데이터를 준비하는 과정
+          // 필요한 method, computed, watch 준비
+          // lifeCycle 에 맞는 적절한 처리
           const text = ref("Hello, Vue.JS!!");
+          const changeText = () => {
+            alert(1);
+            text.value = "HI!!!";
+          };
+          // 페이지에서 사용할 data, function 을 return
           return {
             text,
+            changeText,
           };
         },
       }).mount("#app");

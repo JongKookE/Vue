@@ -1,0 +1,66 @@
+<!-- v-bind.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <img :src="imageSrc" />
+      <a :href="myUrl">Move to url</a>
+      <p :[dynamicattr]="dynamicValue">Dynamic Attr</p>
+      <button :[dynamicattr]="dynamicValue">화긴</button>
+      <button :disabled="isOk" @click="pushOk">확인</button>
+      <button :disabled="isCancel" @click="pushCancel">취소</button>
+      <button v-bind="multiAttrs">여러가지도 되나요??</button>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      const { createApp, ref } = Vue;
+
+      const app = createApp({
+        setup() {
+          const imageSrc = ref("https://picsum.photos/200");
+          const myUrl = ref("https://www.google.co.kr/");
+          // VUE에서 동적 바인딩을 할때는 변수의 이름을 반드시 소문자로 해야한다.
+          // 브라우저? vue에서 강제로 소문자로 바꿔버림
+          // 그러니까.. 음... DOM의 속성의 값에 변수를 줄려면 "" 을 넣어줘야 하고
+          // DOM 속성에 대해 변수를 줄려면 [] 를 사용한다.
+          const dynamicattr = ref("title");
+          const dynamicValue = ref("Hello Vue.js");
+          let isOk = ref(false);
+          let isCancel = ref(true);
+
+          const multiAttrs = ref({ id: "myBtn", class: "btn-primary" });
+
+          const pushOk = () => {
+            isOk.value = true;
+            isCancel.value = false;
+          };
+
+          const pushCancel = () => {
+            isOk.value = false;
+            isCancel.value = ok;
+          };
+          return {
+            imageSrc,
+            myUrl,
+            dynamicattr,
+            dynamicValue,
+            isOk,
+            isCancel,
+            pushOk,
+            pushCancel,
+            multiAttrs,
+          };
+        },
+      });
+
+      app.mount("#app");
+    </script>
+  </body>
+</html>

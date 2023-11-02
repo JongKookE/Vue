@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="(item, index) in arrayItems" v-bind:key="index">
+          {{ item }}
+        </li>
+      </ul>
+      <hr />
+      <ul>
+        <li v-for="({name, price}, index) in numberTest" v-bind:key="index">
+          {{name}} {{price}}
+        </li>
+      </ul>
+      <hr />
+      <ul>
+        <li v-for="(item) in StringText">{{item}}</li>
+      </ul>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      let studylist = ["Java", "DB", "Spring", "Vue"];
+      let ObjectList = [
+        { name: "Java", price: 20000 },
+        { name: "DB", price: 30000 },
+        { name: "Spring", price: 40000 },
+        { name: "Vue", price: 50000 },
+      ];
+      const { createApp, ref, reactive, computed } = Vue;
+      const app = createApp({
+        setup() {
+          const arrayItems = ref(studylist);
+          const objectArrayItems = reactive(ObjectList);
+
+          const numberTest = computed(() => {
+            return objectArrayItems.filter((item) => item.price >= 30000);
+          });
+
+          const StringText = computed(() => {
+            return objectArrayItems.map((el) => (el.price *= 2));
+          });
+          return {
+            arrayItems,
+            objectArrayItems,
+            numberTest,
+            StringText,
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

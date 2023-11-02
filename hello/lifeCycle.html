@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      {{text}}
+      <button @click="changeText">변경</button>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      console.log(Vue);
+      const {
+        createApp,
+        ref,
+        onBeforeMount,
+        onMounted,
+        onBeforeUpdate,
+        onUpdated,
+      } = Vue;
+
+      const app = createApp({
+        setup() {
+          console.log("setup");
+          const text = ref("Hello!! Vue!!!");
+
+          const changeText = () => {
+            text.value = "WORLD";
+          };
+
+          // lifecycle Hook
+          onBeforeMount(() => {
+            console.log("onBeforeMount");
+          });
+
+          onMounted(() => {
+            console.log("onMounted");
+          });
+
+          onBeforeUpdate(() => {
+            console.log("onBeforeUpdate");
+          });
+
+          onUpdated(() => {
+            console.log("onUpdate");
+          });
+
+          return {
+            text,
+            changeText,
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

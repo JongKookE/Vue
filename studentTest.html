@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Insert title here</title>
+    </head>
+    <body>
+        <div id="app">
+            <h1>Student 관리</h1>
+            <hr />
+            <table>
+                <thead>
+                    <tr>
+                        <td>StudentId</td>
+                        <td>StudentNm</td>
+                        <td>Email</td>
+                        <td>Phone</td>
+                        <td>Views</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        v-for="(student, index) in studentList"
+                        :key="index"
+                        @click="detail(student.studentId)"
+                    >
+                        <td>{{student.studentId}}</td>
+                        <td>{{student.studentNm}}</td>
+                        <td>{{student.email}}</td>
+                        <td>{{student.phone}}</td>
+                        <td>{{student.views}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr />
+            <table>
+                <tbody>
+                    <tr>
+                        <td>StudentNm</td>
+                        <td><input />{{detailData.studentNm}}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><input />{{detailData.email}}</td>
+                    </tr>
+                    <tr>
+                        <td>Phone</td>
+                        <td><input />{{detailData.phone}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="" style="border: 1px; margin: auto; text-align: center">
+            <button @click="">등록</button>
+            <button id="btnUpdate">수정</button>
+            <button id="btnDelete">삭제</button>
+            <button id="btnClear">초기화</button>
+            <button id="btnSort">정렬</button>
+            <button id="btnGenerateViews">랜덤 조회수 생성기</button>
+        </div>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script>
+            const { createApp, ref, reactive, computed } = Vue;
+            const app = createApp({
+                setup() {
+                    const studentList = ref([]);
+                    const detailData = ref({});
+                    const list = async () => {
+                        try {
+                            let response = await fetch(
+                                "http://localhost:8080/students"
+                            );
+                            let data = await response.json();
+                            studentList.value = data;
+                            // data로 이후 비동기 처리 결과
+                        } catch (error) {
+                            console.error(error);
+                        }
+                    };
+                    // Arrow Function은 this를 지정 못함!
+                    const detail = function (studentId) {
+                        alert(studentId);
+                        detailData.value = studentList.filter(
+                            (el) => el.studentId == studentId
+                        );
+                    };
+
+                    list();
+                    return {
+                        detail,
+                        studentList,
+                        detailData,
+                    };
+                },
+            }).mount("#app");
+        </script>
+    </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <p>Message: {{ msg }}</p>
+      <p v-once>once: {{msg}}</p>
+      <div v-html="rawHtml"></div>
+      <div v-bind:id="dynamicId">{{app2Msg}}</div>
+      {{ number + 1 }} {{ seen ? 'YES' : 'NO' }} {{
+      msg.split('').reverse().join('') }}
+      <div :id="`list-${id}`"></div>
+      <div>내가 만든 함수 호출 : {{ test() }}</div>
+      <!-- v-if, v-show의 차이점
+        false 일 경우에는 v-if는 DOM 트리에 렌더링이 아예 안됌 
+        v-show는 style:"display:none"으로 돔에는 존재하지만 실제로 눈에는 보이지 않게 되어있음
+      -->
+      <div v-if="seen">if 내가 보이나요</div>
+      <div v-show="seen">show 내가 보이나요</div>
+    </div>
+
+    <div>
+      <!-- {{ number + 1 }}
+      {{ ok ? 'YES' : 'NO' }}
+      {{ message.split('').reverse().join('') }}
+      <div :id="`list-${id}`"></div> -->
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      const { createApp, ref } = Vue;
+
+      const app = createApp({
+        setup() {
+          const msg = ref("hello, SSAFY");
+          const rawHtml = ref(
+            '<span style="color:red">This should be red.</span>'
+          );
+          const seen = ref(false);
+          const dynamicId = ref("my-id");
+          const number = ref(10);
+          const test = () => "안녕 난 뷰야";
+          return {
+            number,
+            msg,
+            seen,
+            rawHtml,
+            dynamicId,
+            test,
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

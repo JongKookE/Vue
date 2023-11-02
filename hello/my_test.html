@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>종국 테스트 전용 파일</title>
+  </head>
+  <body>
+    <div id="app">
+      {{ text }}
+      <button :[attr]="attrValue" @click="one">1번</button>
+      <button @click="two">2번</button>
+      <button @click="three">3번</button>
+      <button @click="plus">더하기</button>
+      <button @click="minus">빼기</button>
+      <button @click="clear">초기화</button>
+      <h1>{{number}}</h1>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      console.log(Vue);
+      const { createApp, ref, computed } = Vue;
+      // Vue App 기본 메소드인 createApp() 를 호출하면서 App 관련된 다양한 내용을 객체로 전달
+      // 전달되는 객체는 setup() 을 구성하고 객체를 리턴
+      const app = createApp({
+        setup() {
+          // 페이지에서 사용할 data를 reactive하게 만드는 작업
+          // 초기 데이터를 준비하는 과정
+          // 필요한 method, computed, watch 준비
+          // lifeCycle 에 맞는 적절한 처리
+          const text = ref("Hello, Vue.JS!!");
+          const attr = ref("id");
+          const attrValue = ref("메롱");
+          const number = ref(1);
+          const one = () => {
+            alert(1);
+          };
+          const two = () => {
+            alert(2);
+          };
+          const three = () => {
+            alert(3);
+          };
+          const plus = () => {
+            return (number.value += 1);
+          };
+          const minus = () => {
+            return (number.value -= 1);
+          };
+          const clear = () => {
+            return (number.value = 0);
+          };
+          // 페이지에서 사용할 data, function 을 return
+          return {
+            text,
+            one,
+            two,
+            three,
+            attr,
+            attrValue,
+            plus,
+            minus,
+            clear,
+            number,
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
