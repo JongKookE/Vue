@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app">
+            <h4>Input Text</h4>
+            <input type="text" v-model="inputText" />[ {{inputText}} ]
+            <hr />
+            <h4>Text Area</h4>
+            <textarea v-model="textareaText" cols="30" rows="10"></textarea> [ {{textareaText}} ]
+            <h4>Checkbox - single</h4>
+            <input type="checkbox" id="checkbox" v-model="checkboxValue" /> [ {{checkboxValue}} ]
+            <hr />
+            <h4>Checkbox - multiple</h4>
+            <input type="checkbox" id="java" value="j" v-model="checkboxValueList" />
+            <label for="java"> java </label>
+            <input type="checkbox" id="spring" value="s" v-model="checkboxValueList" />
+            <label for="spring"> spring </label>
+            <input type="checkbox" id="vue" value="v" v-model="checkboxValueList" />
+            <label for="vue"> vue </label>
+            {{checkboxValueList}}
+            <button @click="printAll()">모두 다 출력하기</button>
+            <br /><br /><br />
+            <hr />
+
+            <h4>Radio</h4>
+            <input type="radio" name="" id="football" value="F" v-model="radioValue" />
+            <label for="football">축구</label>
+            <input type="radio" name="" id="baseBall" value="B" v-model="radioValue" />
+            <label for="baseBall">야구</label>
+            {{radioValue}}
+            <br /><br /><br />
+            <hr />
+
+            <h4>Select</h4>
+            <select v-model="selectValue">
+                <option value="C">Camping</option>
+                <option value="D">Drawing</option>
+                <option value="S">Singing</option>
+            </select>
+            {{selectValue}}
+            <br /><br /><br />
+            <hr />
+
+            <h4>Select - multiple</h4>
+            <select v-model="selectValueList" multiple>
+                <option value="C">Camping</option>
+                <option value="D">Drawing</option>
+                <option value="S">Singing</option>
+            </select>
+            {{selectValueList}}
+        </div>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script>
+            const { createApp, ref } = Vue;
+
+            const app = createApp({
+                setup() {
+                    const inputText = ref("ssafy");
+                    const textareaText = ref("textarea 내용");
+                    const checkboxValue = ref(false);
+                    const checkboxValueList = ref(["j", "s"]);
+                    const radioValue = ref("F");
+                    const selectValue = ref("D");
+                    const selectValueList = ref(["C", "S"]);
+
+                    function printAll() {
+                        // for (var i = 0; i < checkboxValueList.value.length; i++) {
+                        //     console.log(checkboxValueList.value[i]);
+                        // }
+                        checkboxValueList.value.forEach((element) => {
+                            console.log(element);
+                        });
+                    }
+                    return { inputText, textareaText, checkboxValue, checkboxValueList, printAll, radioValue, selectValue, selectValueList };
+                },
+            }).mount("#app");
+        </script>
+    </body>
+</html>

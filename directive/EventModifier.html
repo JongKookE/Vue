@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app">
+            <form action="http://naver.com" target="_blank">
+                <input v-model="inputText1" type="text" />
+                <button type="submit" @click="callSubmit">전송</button>
+            </form>
+            <hr />
+            <form id="form2" @submit.prevent="callSubmit2" action="http://naver.com" target="_blank">
+                <input v-model="inputText2" type="text" />
+                <button type="submit">전송</button>
+            </form>
+        </div>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script>
+            const { createApp, ref } = Vue;
+
+            const app = createApp({
+                setup() {
+                    const inputText1 = ref("");
+                    const inputText2 = ref("");
+                    const callSubmit = (e) => {
+                        if (inputText1.value == "") {
+                            console.log("empty");
+                        }
+                    };
+
+                    const callSubmit2 = (e) => {
+                        if (inputText2.value != "") {
+                            console.log("callSubmit2 is not Empty!!");
+                            document.querySelector("#form2").submit();
+                        }
+                    };
+                    return {
+                        callSubmit,
+                        callSubmit2,
+                        inputText1,
+                        inputText2,
+                    };
+                },
+            }).mount("#app");
+        </script>
+    </body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app">
+            <div>{{text}}</div>
+            <div>{{reversedText}}</div>
+            <div>{{reversedText}}</div>
+            <div>{{reversedText}}</div>
+            <button @click="changeText">변경</button>
+        </div>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script>
+            const { createApp, ref, watch } = Vue;
+
+            const app = createApp({
+                setup() {
+                    const text = ref("안녕하세요, Vue!");
+                    const reversedText = ref("!!!");
+                    const changeText = () => (text.value = "Hello, Vue!!!");
+                    // watch는 내부에 대상이 되는 파라미터와 함수가 온다.
+                    watch(text, (newV, oldV) => console.log(oldV, newV));
+                    return { text, reversedText, changeText };
+                },
+            }).mount("#app");
+        </script>
+    </body>
+</html>
