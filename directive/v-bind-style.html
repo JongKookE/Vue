@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .subClass {
+                font-size: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div style="color: green">일반 inline style</div>
+            <div v-bind:style="{color: myColor}">일반 inline style</div>
+            <div v-bind:style="{'background-color': backGroundColor}">
+                일반 inline style
+            </div>
+            <div v-bind:style="{backgroundColor: backGroundColor}">
+                카멜 표기법으로 표시
+            </div>
+            <div v-bind:class="{subClass: valid}">스타일 적용 테스트</div>
+        </div>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script>
+            const { createApp, ref } = Vue;
+            const app = createApp({
+                setup() {
+                    const myColor = ref("blue");
+                    const backGroundColor = ref("lightGreen");
+                    const valid = ref(true);
+                    const myClass = ref("subClass");
+                    return {
+                        valid,
+                        myClass,
+                        myColor,
+                        backGroundColor,
+                    };
+                },
+            }).mount("#app");
+        </script>
+    </body>
+</html>

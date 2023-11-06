@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .reddish {
+                color: crimson;
+            }
+            .bgDark {
+                background: darkgray;
+            }
+            .someClass {
+                border: 1px solid blue;
+            }
+            .nextClass {
+                font-size: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div class="reddish">{{textClass}}</div>
+            <!-- 변수에 따라서 class 를 부여하거나 부여하지 않기: boolean 변수를 이용해서 true, false 부여 -->
+
+            <div v-bind:class="{reddish: isReddish}">{{textClass}}</div>
+            <div class="someClass" v-bind:class="{bgDark: bgDark}, nc">
+                {{textClass}}
+            </div>
+        </div>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script>
+            const { createApp, ref } = Vue;
+            const app = createApp({
+                setup() {
+                    const textClass = ref("v-class Class");
+                    const isReddish = ref(true);
+                    const bgDark = ref(true);
+                    const nc = ref("nextClass");
+                    return {
+                        nc,
+                        bgDark,
+                        textClass,
+                        isReddish,
+                    };
+                },
+            }).mount("#app");
+        </script>
+    </body>
+</html>

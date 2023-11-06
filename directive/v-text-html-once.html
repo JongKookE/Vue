@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app">
+            <div v-text="content"></div>
+            <div>{{content}}</div>
+            <div v-html="content"></div>
+            <div v-once>{{content}}</div>
+            <!-- 렌더링을 한번만 해라! -->
+            <button v-if="valid" @click="change">녹색으로 변경</button>
+            <button v-if="!valid" @click="change">회색으로 변경</button>
+        </div>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script>
+            const { createApp, ref } = Vue;
+            let css = `<span style="background-color: lightgray">회색</span>`;
+            const app = createApp({
+                setup() {
+                    const content = ref(css);
+                    const valid = ref(true);
+                    const change = () => {
+                        if (valid) {
+                            content.value = `<span style="background-color: green">녹색</span>`;
+                            valid = !valid;
+                            console.log(valid);
+                        } else {
+                            content.value = `<span style="background-color: lightgray">회색</span>`;
+                            valid = !valid;
+                            console.log(valid);
+                        }
+                    };
+
+                    return { content, change, valid };
+                },
+            }).mount("#app");
+        </script>
+    </body>
+</html>

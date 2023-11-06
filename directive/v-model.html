@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app">
+            <!-- keyup은 사용자가 입력하는 하나하나
+          input은 하나의 덩어리? -->
+            <input type="text" :value="inputText1" @input="updateInput" />
+            <input type="text" v-model="inputText2" />
+        </div>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script>
+            const { createApp, ref } = Vue;
+            const temp = 300;
+            const app = createApp({
+                setup() {
+                    const inputText1 = ref("12345");
+                    const inputText2 = ref(`${temp}`);
+                    const updateInput = (e) => {
+                        inputText1.value = e.target.value;
+                    };
+                    return {
+                        updateInput,
+                        inputText1,
+                        inputText2,
+                    };
+                },
+            }).mount("#app");
+        </script>
+    </body>
+</html>

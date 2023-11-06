@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .subClass {
+                font-size: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <!--Vue 밖의 변수 접근 : 오류 발생 -->
+            <button v-on:click="alert(outerCount)">outerCount 증가</button>
+            <button v-on:click="count++">count</button>
+            <button @click="increaseCount()">{{count}}</button>
+
+            <button @click="sayCount()">count 증가</button>
+            <!-- no parameter-->
+            <button @click="sayCount(5)">count 증가</button>
+            <!-- const parameter-->
+            <button @click="sayCount(count)">count 증가</button>
+            <input :value="countMessage" type="text" /><!-- variable parameter-->
+            <hr />
+            <div @mouseover="mouseMessage = `마우스 Over`" @mouseout="mouseMessage = `마우스 Out`">메시지는 {{mouseMessage}}</div>
+            <!-- keydown: 키를 누르자마자 바로 발동  -->
+            <!-- keyup: 키를 누르고 해당 역할을 한 후에 발동-->
+            <!-- keyup은 tab을 누르면 벗어나지만 keydown은 역할을 하고 발동된다. -->
+            <!-- Enter: 13 -->
+            <input @keydown="showKey" type="text" />
+            <input @keydown.enter="enterKey" type="text" />
+            <input @keyup="multikey" type="text" placeholder="ctrl + v 키 입력" :value="keyMessage" /> <button @click="clear()">초기화</button>
+            <input @keyup="altKey" type="text" value="alt + f5를 눌러주세요" required />
+        </div>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script>
+            const { createApp, ref } = Vue;
+            var outerCount = 0;
+            const app = createApp({
+                setup() {
+                    const count = ref(0);
+                    const increaseCount = () => (count.value += 1);
+                    const countMessage = ref(0);
+                    const sayCount = (count = 10) => {
+                        countMessage.value = `${count}번 클릭했습니다.`;
+                    };
+
+                    const mouseMessage = ref(`초기상태`);
+                    const showKey = (s) => alert(`${s.key}: ${s.keyCode}`);
+                    const enterKey = () => {
+                        alert("Enter를 입력하였습니다!!");
+                    };
+                    const keyMessage = ref("");
+                    const multikey = (e) => {
+                        // console.log(`${e.key} : ${e.keyCode}`);
+                        if (e.ctrlKey && e.keyCode == 86) {
+                            keyMessage.value = `ctrl + v`;
+                            console.log(`ctrl + v`);
+                        }
+                        if (e.ctrlKey && e.keyCode == 67) {
+                            console.log(`ctrl + c`);
+                            keyMessage.value = `ctrl + c`;
+                        }
+                    };
+
+                    const altKey = (e) => {
+                        // console.log(`${e.key} : ${e.keyCode}`);
+                        if (e.altKey && e.keyCode == 116) {
+                            e.preventDefault();
+                            alert("alt + f5를 눌렀습니다.");
+                        }
+                    };
+                    const clear = () => (keyMessage.value = "");
+                    return {
+                        altKey,
+                        clear,
+                        keyMessage,
+                        multikey,
+                        enterKey,
+                        showKey,
+                        mouseMessage,
+                        sayCount,
+                        countMessage,
+                        count,
+                        increaseCount,
+                    };
+                },
+            }).mount("#app");
+        </script>
+    </body>
+</html>
