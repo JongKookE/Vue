@@ -6,25 +6,25 @@
     </head>
     <body>
         <div id="app">
-            <h1>Student 관리</h1>
+            <h1>Employee 관리 - Axios</h1>
             <hr />
             <table>
                 <thead>
                     <tr>
-                        <td>StudentId</td>
-                        <td>StudentNm</td>
+                        <td>EmployeeId</td>
+                        <td>First Name</td>
+                        <td>Last Name</td>
                         <td>Email</td>
-                        <td>Phone</td>
-                        <td>Views</td>
+                        <td>Hire Date</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(student, index) in studentList" :key="index" @click="detail(student.studentId)">
-                        <td>{{student.studentId}}</td>
-                        <td>{{student.studentNm}}</td>
-                        <td>{{student.email}}</td>
-                        <td>{{student.phone}}</td>
-                        <td>{{student.views}}</td>
+                    <tr v-for="(emp, index) in empList" :key="index" @click="detail(emp.employeeId)">
+                        <td>{{emp.employeeId}}</td>
+                        <td>{{emp.firstName}}</td>
+                        <td>{{emp.lastName}}</td>
+                        <td>{{emp.email}}</td>
+                        <td>{{emp.hireDate}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -32,16 +32,20 @@
             <table>
                 <tbody>
                     <tr>
-                        <td>StudentNm</td>
-                        <td><input v-model="student.studentNm" /></td>
+                        <td>LastName</td>
+                        <td><input v-model="emp.lastName" /></td>
+                    </tr>
+                    <tr>
+                        <td>firstName</td>
+                        <td><input v-model="emp.firstName" /></td>
                     </tr>
                     <tr>
                         <td>Email</td>
-                        <td><input v-model="student.email" /></td>
+                        <td><input v-model="emp.email" /></td>
                     </tr>
                     <tr>
-                        <td>Phone</td>
-                        <td><input v-model="student.phone" /></td>
+                        <td>hireDate</td>
+                        <td><input v-model="emp.hireDate" /></td>
                     </tr>
                 </tbody>
             </table>
@@ -50,67 +54,57 @@
                 <button @click="update()">수정</button>
                 <button @click="Delete()">삭제</button>
                 <button @click="clear()">초기화</button>
-                <button id="btnSort">정렬</button>
+                <button @click="invade()">정렬</button>
             </div>
         </div>
 
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script>
-            const { createApp, ref, reactive, computed } = Vue;
+            const { createApp, ref } = Vue;
             const app = createApp({
                 setup() {
-                    const student = ref({});
-                    const studentList = ref([]);
+                    const emp = ref({});
+                    const empList = ref([]);
 
                     const clear = function () {
                         console.log("clear()");
-                        student.value = {
-                            studentId: 0,
-                            studentNm: "",
+                        emp.value = {
+                            employeeId: 0,
+                            first_name: "",
+                            last_name: "",
                             email: "",
-                            phone: "",
-                            views: 0,
+                            hiredate: "",
                         };
                     };
 
                     const list = async () => {
                         try {
-                            let response = await fetch("http://localhost:8080/students");
-                            let data = await response.json();
-                            studentList.value = data;
+                            let response = await axios.get("http://localhost:8080/axios/empList");
+                            // axios라면 이미 javascript 객체임
+                            let { data } = await response;
+                            empList.value = data;
                             // data로 이후 비동기 처리 결과
                         } catch (error) {
                             console.error(error);
                         }
                     };
                     // Arrow Function은 this를 지정 못함!
-                    const detail = async function (studentId) {
+                    const detail = async function (employeeId) {
                         try {
-                            let response = await fetch("http://localhost:8080/students/" + studentId);
-                            let data = await response.json();
+                            let { data } = await axios.get("http://localhost:8080/axios/empDetail/" + employeeId);
 
-                            student.value = data;
-                            console.log(data);
+                            emp.value = data;
                             // data로 이후 비동기 처리 결과
                         } catch (error) {
                             console.error(error);
                         }
                     };
                     const insert = async function () {
-                        console.log("insert()");
-                        let fetchOptions = {
-                            method: "POST",
-                            body: new URLSearchParams(student.value),
-                        };
-                        console.log(student.value);
                         try {
-                            let response = await fetch("http://localhost:8080/students", fetchOptions);
-                            // let data = await response.json();
-                            // student.value = data;
-                            // console.log(data);
+                            let response = await axios.post("http://localhost:8080/axios/empInsert", emp.value);
                             list();
                             clear();
-                            // data로 이후 비동기 처리 결과
                         } catch (error) {
                             console.error(error);
                         }
@@ -118,15 +112,9 @@
 
                     const update = async function () {
                         console.log("update()");
-                        let fetchOptions = {
-                            method: "PUT",
-                            body: new URLSearchParams(student.value),
-                        };
-                        console.log(student.value);
+                        console.log(emp.value);
                         try {
-                            let response = await fetch("http://localhost:8080/students/" + student.value.studentId, fetchOptions);
-                            let data = await response.json();
-                            console.log(data);
+                            await axios.put("http://localhost:8080/axios/empUpdate", emp.value);
                             list();
                             clear();
                             // data로 이후 비동기 처리 결과
@@ -137,14 +125,8 @@
 
                     const Delete = async function () {
                         console.log("delete()");
-                        let fetchOptions = {
-                            method: "DELETE",
-                        };
-                        console.log(student.value);
                         try {
-                            let response = await fetch("http://localhost:8080/students/" + student.value.studentId, fetchOptions);
-                            let data = await response.json();
-                            console.log(data);
+                            let { data } = await axios.delete("http://localhost:8080/axios/empDelete/" + emp.value.employeeId);
                             list();
                             clear();
                             // data로 이후 비동기 처리 결과
@@ -159,8 +141,8 @@
                         update,
                         detail,
                         insert,
-                        studentList,
-                        student,
+                        emp,
+                        empList,
                         clear,
                     };
                 },

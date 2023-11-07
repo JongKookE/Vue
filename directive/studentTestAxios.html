@@ -6,7 +6,7 @@
     </head>
     <body>
         <div id="app">
-            <h1>Student 관리</h1>
+            <h1>Student 관리 - Axios</h1>
             <hr />
             <table>
                 <thead>
@@ -50,17 +50,31 @@
                 <button @click="update()">수정</button>
                 <button @click="Delete()">삭제</button>
                 <button @click="clear()">초기화</button>
-                <button id="btnSort">정렬</button>
+                <button @click="invade()">정렬</button>
             </div>
         </div>
 
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script>
             const { createApp, ref, reactive, computed } = Vue;
             const app = createApp({
                 setup() {
                     const student = ref({});
                     const studentList = ref([]);
+
+                    const invade = async () => {
+                        console.log("invade()");
+                        try {
+                            await axios.post("http://192.168.203.106:8080/axios/students", {
+                                studentNm: "호정",
+                                email: "헝조",
+                                phone: "우엥잉",
+                            });
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    };
 
                     const clear = function () {
                         console.log("clear()");
@@ -75,8 +89,11 @@
 
                     const list = async () => {
                         try {
-                            let response = await fetch("http://localhost:8080/students");
-                            let data = await response.json();
+                            let response = await axios.get("http://localhost:8080/axios/students");
+                            // axios라면 이미 javascript 객체임
+                            console.log(response);
+                            let { data } = await response;
+                            console.log(data);
                             studentList.value = data;
                             // data로 이후 비동기 처리 결과
                         } catch (error) {
@@ -86,8 +103,7 @@
                     // Arrow Function은 this를 지정 못함!
                     const detail = async function (studentId) {
                         try {
-                            let response = await fetch("http://localhost:8080/students/" + studentId);
-                            let data = await response.json();
+                            let { data } = await axios.get("http://localhost:8080/axios/students/" + studentId);
 
                             student.value = data;
                             console.log(data);
@@ -97,20 +113,10 @@
                         }
                     };
                     const insert = async function () {
-                        console.log("insert()");
-                        let fetchOptions = {
-                            method: "POST",
-                            body: new URLSearchParams(student.value),
-                        };
-                        console.log(student.value);
                         try {
-                            let response = await fetch("http://localhost:8080/students", fetchOptions);
-                            // let data = await response.json();
-                            // student.value = data;
-                            // console.log(data);
+                            let response = await axios.post("http://localhost:8080/axios/students", student.value);
                             list();
                             clear();
-                            // data로 이후 비동기 처리 결과
                         } catch (error) {
                             console.error(error);
                         }
@@ -118,15 +124,9 @@
 
                     const update = async function () {
                         console.log("update()");
-                        let fetchOptions = {
-                            method: "PUT",
-                            body: new URLSearchParams(student.value),
-                        };
                         console.log(student.value);
                         try {
-                            let response = await fetch("http://localhost:8080/students/" + student.value.studentId, fetchOptions);
-                            let data = await response.json();
-                            console.log(data);
+                            await axios.put("http://localhost:8080/axios/students/" + student.value.studentId, student.value);
                             list();
                             clear();
                             // data로 이후 비동기 처리 결과
@@ -137,14 +137,8 @@
 
                     const Delete = async function () {
                         console.log("delete()");
-                        let fetchOptions = {
-                            method: "DELETE",
-                        };
-                        console.log(student.value);
                         try {
-                            let response = await fetch("http://localhost:8080/students/" + student.value.studentId, fetchOptions);
-                            let data = await response.json();
-                            console.log(data);
+                            await axios.delete("http://localhost:8080/axios/students/" + student.value.studentId);
                             list();
                             clear();
                             // data로 이후 비동기 처리 결과
@@ -155,6 +149,7 @@
 
                     list();
                     return {
+                        invade,
                         Delete,
                         update,
                         detail,

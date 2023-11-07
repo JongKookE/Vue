@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+
+    <body>
+        <div id="app">
+            <!-- 자식은 call-parent event를 발생, 부모는 v-on 을 기다린다. -->
+            <child-component v-on:call-parent="fromChild()"></child-component>
+        </div>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script>
+            const { createApp, ref, defineComponent, emit } = Vue;
+
+            const ChildComponent = defineComponent({
+                template: `<button @click="eventBtnClick()">click</button>`,
+
+                setup(probs, { emit }) {
+                    const myValue = ref(200);
+                    const eventBtnClick = () => emit("call-parent");
+                    return { eventBtnClick };
+                },
+            });
+            const app = createApp({
+                components: {
+                    ChildComponent,
+                },
+
+                setup() {
+                    const fromChild = () => alert("fromChild is Calldd");
+                    return {
+                        fromChild,
+                    };
+                },
+            }).mount("#app");
+        </script>
+    </body>
+</html>

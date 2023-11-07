@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app">
+            <global-component></global-component>
+        </div>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+            import test from "./LocalComponent.js";
+            const { createApp, ref } = Vue;
+            const app = createApp({});
+            // app에 component를 추가
+            app.component(
+                "GlobalComponent",
+                {
+                    template: `<div>Global Component 입니다. 1</div><div>Global Component 입니다. 2</div>`,
+                } // component 이름
+            ); // component 객체를 위한 모양, 기능
+            app.mount("#app");
+        </script>
+    </body>
+</html>
