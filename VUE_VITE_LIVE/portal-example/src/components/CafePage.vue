@@ -7,7 +7,7 @@
         Some quick example text to build on the card title and make up the bulk of the card's
         content.
       </p>
-      <a class="btn btn-primary" @click="sendMail()">Send Mail</a>
+      <a @click="sendMail()">Send Mail</a>
     </div>
   </div>
 </template>

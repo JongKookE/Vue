@@ -23,7 +23,13 @@
           </li>
 
           <li class="nav-item">
-            <router-link to="/mail/:from/:content" class="nav-link">mail</router-link>
+            <!-- <router-link to="/mail/:from/:content" class="nav-link">mail</router-link> -->
+            <!-- Named Route -->
+            <router-link
+              :to="{ name: 'Mail', params: { from: '홍길동', content: '내용입니다.' } }"
+              class="nav-link"
+              >mail</router-link
+            >
           </li>
 
           <li class="nav-item">
@@ -59,7 +65,7 @@
             </li>
 
             <li class="nav-item" v-show="!isLogin">
-              <a class="nav-link" href="#">Login</a>
+              <router-link to="/login" class="nav-link">Login</router-link>
             </li>
           </ul>
         </form>
@@ -70,7 +76,8 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-
+// vite 가 static content 에 대해 대신 hard-coding 방식으로 처리해준다.
+import notLoginUserProfileImageUrl from '/src/assets/noProfile.png'
 const searchKeyword = ref('')
 const clickSearch = () => {
   alert(searchKeyword.value)
@@ -82,6 +89,6 @@ const clickSearch = () => {
 const isLogin = ref(false)
 const userData = reactive({
   userName: '',
-  userProfileImageUrl: '/src/assets/noProfile.png'
+  userProfileImageUrl: notLoginUserProfileImageUrl
 })
 </script>
