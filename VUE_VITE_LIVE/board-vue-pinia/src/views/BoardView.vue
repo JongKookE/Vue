@@ -20,71 +20,57 @@
           <th>조회수</th>
         </tr>
       </thead>
-      <tbody id="boardTbody">
-        <tr v-for="(board, index) in boardStore.list" :key="index">
+      <tbody v-for="board in boardStore.list" v-bind:key="board.boardId">
+        <tr>
           <td>{{ board.boardId }}</td>
-          <td>{{ board.userTitle }}</td>
+          <td>{{ board.title }}</td>
           <td>{{ board.userName }}</td>
-          <td>
-            {{
-              util.makeDateStr(board.regDt.date, '/') +
-              ' ' +
-              util.makeTimeStr(board.regDt.time, ':')
-            }}
-          </td>
+          <td>{{ util.makeDateStr(board.regDt.date, '/') }}</td>
           <td>{{ board.readCount }}</td>
         </tr>
       </tbody>
     </table>
 
-    <div id="paginationWrapper"></div>
     <PaginationUI></PaginationUI>
     <insert-modal></insert-modal>
+    <update-modal></update-modal>
     <detail-modal></detail-modal>
-    <UpdateModal></UpdateModal>
 
-    <button class="btn btn-sm btn-primary" id="btnBoardInsertUI">글쓰기</button>
+    <div id="paginationWrapper"></div>
+
+    <button class="btn btn-sm btn-primary" @click="showInsertModal">글쓰기</button>
   </div>
 </template>
 
 <script setup>
-// components를 import
+import { ref, onMounted } from 'vue'
+
+//component
 import PaginationUI from '../components/PaginationUI.vue'
 import InsertModal from '../components/modals/InsertModal.vue'
-import DetailModal from '../components/modals/DetailModal.vue'
 import UpdateModal from '../components/modals/UpdateModal.vue'
-import util from '@/common/util'
+import DetailModal from '../components/modals/DetailModal.vue'
+
+//common
+import util from '@/common/util.js'
+
+//bootstrap 객체 생성
+import { Modal } from 'bootstrap'
+
 import { useBoardStore } from '../stores/boardStore'
-// import { useRouter } from 'vue-router'
-
-// const router = useRouter()
-
 const { boardStore, boardList } = useBoardStore()
-boardList()
 
-// const login = async () => {
-//   let loginObj = {
-//     userPassword: authStore.userPassword,
-//     userEmail: authStore.userEmail
-//   }
-//   try {
-//     let { data } = await http.post('/login', loginObj)
-//     if (data.result == 'success') {
-//       sessionStorage.setItem('isLogin', 'true')
-//       sessionStorage.setItem('userName', data.userName)
-//       sessionStorage.setItem('userProfileImageUrl', data.userProfileImageUrl)
-//       setLogin({
-//         isLogin: true,
-//         userName: data.userName,
-//         userProfileImageUrl: data.userProfileImageUrl
-//       })
-//     } else if (data.result == 'fail') {
-//       alert('이메일 또는 비밀번호를 입력하세요')
-//     }
-//     console.log(data)
-//     router.push('/board')
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
+let insertModal = null
+let updateModal = null
+let detailModal = null
+
+//mount 안된 상태에서는 document 내에 정보가 없기 때문에!
+onMounted(() => {
+  insertModal = new Modal(document.getElementById('insertModal'))
+  updateModal = new Modal(document.getElementById('updateModal'))
+  detailModal = new Modal(document.getElementById('detailModal'))
+})
+
+const showInsertModal = () => insertModal.show()
+boardList()
 </script>
