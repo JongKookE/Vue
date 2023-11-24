@@ -1,250 +1,160 @@
 <template>
-  <div class="container">
-    <div class="mb-3 mt-5 d-flex justify-content-center">
-      <h1 class="display-4">삐따기 세상</h1>
-    </div>
-    <div class="mb-3">
-      <h2>Register</h2>
-    </div>
-    <form novalidate>
+   <div class="container">
+      <div class="container-fluid text-sm-center p-5 bg-light">
+         <!-- bg-light is background color & p-5 is padding -->
+         <h1 class="display-2">삐따기 세상2</h1>
+         <p class="lead">가입하세요.</p>
+      </div>
+      <h2 class="mb-3 mt-3">Register</h2>
       <div class="mb-3">
-        <label for="userName">User Name:</label>
-        <input
-          type="text"
-          class="form-control"
-          :class="{ 'is-valid': isUserNameFocusAndValid, 'is-invalid': isUserNameFocusAndInValid }"
-          placeholder="Enter userName"
-          name="userName"
-          v-model="userName"
-          required
-          @input="validateUserName"
-          @focus="isUserNameFocus = true"
-          @blur="isUserNameFocus = false"
-        />
-        <div class="valid-feedback">Valid.</div>
-        <div class="invalid-feedback">Invalid.</div>
+         <input type="name" class="form-control" placeholder="Enter User Name" :class="{ 'is-valid': isUserNameFocusAndValid, 'is-invalid': isUserNameFocusAndInvalid }" v-model="userName" @input="validateUserName" @focus="isUserNameFocus = true" />
+         <div class="valid-feedback">Valid.</div>
+         <div class="invalid-feedback">올바른 이름을 입력해 주세요.</div>
       </div>
       <div class="mb-3">
-        <label for="userPassword">Password:</label>
-        <input
-          type="password"
-          class="form-control"
-          :class="{
-            'is-valid': isUserPasswordFocusAndValid,
-            'is-invalid': isUserPasswordFocusAndInValid
-          }"
-          placeholder="Enter password"
-          name="userPassword"
-          v-model="userPassword"
-          required
-          @input="validateUserPassword"
-          @focus="isUserPasswordFocus = true"
-          @blur="isUserPasswordFocus = false"
-        />
-        <div class="valid-feedback">Valid.</div>
-        <div class="invalid-feedback">
-          1개 이상의 특수문자, 대소문자 및 숫자를 포함하고 8자리 이상이여야 합니다.
-        </div>
+         <!-- 각각의 input 이 focus 를 가진 경우에만 반응하도록 해야하고, click 할 때마다 valid 확인 필요 -->
+         <input type="email" class="form-control" placeholder="Enter Email" :class="{ 'is-valid': isUserEmailFocusAndValid, 'is-invalid': isUserEmailFocusAndInValid }" v-model="userEmail" @input="validateEmail" @focus="isUserEmailFocus = true" />
+         <!-- 테스트 코드 -->
+         <!-- {{isUserEmailFocus}} - {{ isUserEmailFocusAndValid }} - {{ isUserEmailFocusAndInValid }} -->
+         <div class="valid-feedback">Valid.</div>
+         <div class="invalid-feedback">올바른 Email 을 입력해 주세요.</div>
       </div>
       <div class="mb-3">
-        <label for="userPassword2">Password Confirm:</label>
-        <input
-          type="password"
-          class="form-control"
-          :class="{
-            'is-valid': isUserPassword2FocusAndValid,
-            'is-invalid': isUserPassword2FocusAndInValid
-          }"
-          placeholder="Confirm password"
-          name="userPassword2"
-          v-model="userPassword2"
-          required
-          @input="validateUserPassword2"
-          @focus="isUserPassword2Focus = true"
-          @blur="isUserPassword2Focus = false"
-        />
-        <div class="valid-feedback">Valid.</div>
-        <div class="invalid-feedback">Please fill out this field.</div>
+         <input type="password" class="form-control" placeholder="Enter Password" :class="{ 'is-valid': isUserPasswordFocusAndValid, 'is-invalid': isUserPasswordFocusAndInvalid }" v-model="userPassword" @input="validatePassword" @focus="isUserPasswordFocus = true" />
+         <div class="valid-feedback">Valid.</div>
+         <div class="invalid-feedback">1개 이상의 특수문자, 대소문자 및 숫자를 포함하고 8자리 이상이여야 합니다.</div>
       </div>
       <div class="mb-3">
-        <label for="userEmail">Email:</label>
-        <input
-          type="text"
-          class="form-control"
-          :class="{
-            'is-valid': isUserEmailFocusAndValid,
-            'is-invalid': isUserEmailFocusAndInValid
-          }"
-          placeholder="Enter email"
-          name="userEmail"
-          v-model="userEmail"
-          required
-          @input="validateUserEmail"
-          @focus="isUserEmailFocus = true"
-          @blur="isUserEmailFocus = false"
-        />
-        <div class="valid-feedback">Valid.</div>
-        <div id="userEmailInvalidFeedback" class="invalid-feedback">Invalid.</div>
+         <input type="password" class="form-control" placeholder="Conform Password" :class="{ 'is-valid': isUserPassword2FocusAndValid, 'is-invalid': isUserPassword2FocusAndInvalid }" v-model="userPassword2" @input="validatePassword2" @focus="isUserPassword2Focus = true" />
+         <div class="valid-feedback">Valid.</div>
+         <div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
       </div>
-      <div class="form-check form-check-inline" v-for="(code, index) in codeList" :key="index">
-        <input
-          class="form-check-input"
-          name="userClsf"
-          :value="code.code"
-          type="radio"
-          v-model="userClsf"
-        />
-        <label class="form-check-label">{{ code.codeName }}</label>
+      <div class="mb-3">
+         <div class="form-check form-check-inline" v-for="(code, index) in codeList" :key="index">
+            <input class="form-check-input" name="userClsf" :value="code.code" type="radio" v-model="userClsf" />
+            <label class="form-check-label">{{ code.codeName }}</label>
+         </div>
       </div>
-    </form>
-    <div>
-      <button @click="register" class="btn btn-primary">가입</button>
-    </div>
-  </div>
-
-  {{ userClsf }}
+      <div>
+         <button @click="register" class="btn btn-primary">가입하기</button>
+      </div>
+   </div>
 </template>
 
 <script setup>
+
+
+import http from "@/common/axios.js";
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import http from '@/common/axios.js'
 
-// v-model
 const router = useRouter()
+
 const userName = ref('')
+const userEmail = ref('')
 const userPassword = ref('')
 const userPassword2 = ref('')
-const userEmail = ref('')
-
-const groupCode = '001' // 회원종류
-const codeList = ref([])
-const userClsf = ref(`001`)
 
 // focus
 const isUserNameFocus = ref(false)
+const isUserEmailFocus = ref(false)
 const isUserPasswordFocus = ref(false)
 const isUserPassword2Focus = ref(false)
-const isUserEmailFocus = ref(false)
-//
 
 // validation
 const isUserNameValid = ref(false)
+const isUserEmailValid = ref(false)
 const isUserPasswordValid = ref(false)
 const isUserPassword2Valid = ref(false)
-const isUserEmailValid = ref(false)
-//
 
-// focus + valid <= computed
-const isUserNameFocusAndValid = computed(() => isUserNameFocus.value && isUserNameValid.value)
-const isUserPasswordFocusAndValid = computed(
-  () => isUserPasswordFocus.value && isUserPasswordValid.value
-)
-const isUserPassword2FocusAndValid = computed(
-  () => isUserPassword2Focus.value && isUserPassword2Valid.value
-)
-const isUserEmailFocusAndValid = computed(() => isUserEmailFocus.value && isUserEmailValid.value)
+// 회원 구분
+const groupCode = '001'
+const codeList = ref([])
+const userClsf = ref('010') // 일반회원 default
 
-const isUserNameFocusAndInValid = computed(() => isUserNameFocus.value && !isUserNameValid.value)
-const isUserPasswordFocusAndInValid = computed(
-  () => isUserPasswordFocus.value && !isUserPasswordValid.value
-)
-const isUserPassword2FocusAndInValid = computed(
-  () => isUserPassword2Focus.value && !isUserPassword2Valid.value
-)
-const isUserEmailFocusAndInValid = computed(() => isUserEmailFocus.value && !isUserEmailValid.value)
+const isUserNameFocusAndValid = computed(() => isUserNameFocus.value && isUserNameValid.value) 
+const isUserNameFocusAndInvalid = computed(() => isUserNameFocus.value && !isUserNameValid.value) 
+const isUserEmailFocusAndValid = computed(() => isUserEmailFocus.value && isUserEmailValid.value) 
+const isUserEmailFocusAndInValid = computed(() => isUserEmailFocus.value && !isUserEmailValid.value) 
+const isUserPasswordFocusAndValid = computed(() => isUserPasswordFocus.value && isUserPasswordValid.value) 
+const isUserPasswordFocusAndInvalid = computed(() => isUserPasswordFocus.value && !isUserPasswordValid.value) 
+const isUserPassword2FocusAndValid = computed(() => isUserPassword2Focus.value && isUserPassword2Valid.value) 
+const isUserPassword2FocusAndInvalid = computed(() => isUserPassword2Focus.value && !isUserPassword2Valid.value) 
 
-const validateUserName = () => {
-  isUserNameValid.value = userName.value.length > 0 ? true : false
-}
+const getCodeList = async () => {
+   let params = {
+         groupCode: groupCode // reactive X
+      };
 
-const validateUserPassword = () => {
-  let patternEngAtListOne = new RegExp(/[a-zA-Z]+/) // + for at least one
-  let patternSpeAtListOne = new RegExp(/[~!@#$%^&*()_+|<>?:{}]+/) // + for at least one
-  let patternNumAtListOne = new RegExp(/[0-9]+/) // + for at least one
+      try {
+         let { data } = await http.get("/codes", { params }); // params : params shorthand property, Not JSON request
+         console.log("UsersPage: data : ");
+         console.log(data);
 
-  isUserPasswordValid.value =
-    patternEngAtListOne.test(userPassword.value) &&
-    patternSpeAtListOne.test(userPassword.value) &&
-    patternNumAtListOne.test(userPassword.value) &&
-    userPassword.value.length >= 8
-      ? true
-      : false
-}
-
-const validateUserPassword2 = () => {
-  let patternEngAtListOne = new RegExp(/[a-zA-Z]+/) // + for at least one
-  let patternSpeAtListOne = new RegExp(/[~!@#$%^&*()_+|<>?:{}]+/) // + for at least one
-  let patternNumAtListOne = new RegExp(/[0-9]+/) // + for at least one
-
-  isUserPassword2Valid.value =
-    patternEngAtListOne.test(userPassword2.value) &&
-    patternSpeAtListOne.test(userPassword2.value) &&
-    patternNumAtListOne.test(userPassword2.value) &&
-    userPassword2.value.length >= 8
-      ? true
-      : false
-}
-
-const validateUserEmail = () => {
-  let regexp = new RegExp(
-    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
-  )
-  isUserEmailValid.value = regexp.test(userEmail.value)
+         codeList.value = data;
+      } catch (error) {
+         console.log("UsersPage: error : ");
+         console.log(error);
+         $alertify.error("서버에 문제가 발생했습니다.");
+      }
 }
 
 const register = async () => {
-  try {
-    let { data } = await http.post('/users', {
+   if (!isUserEmailValid || !isUserPasswordValid || !isUserPassword2Valid) return;
+
+   let registerObj = {
       userName: userName.value,
-      userPassword: userPassword.value,
       userEmail: userEmail.value,
-      userClsf: userClsf.value
-    })
+      userPassword: userPassword.value,
+      userClsf: userClsf.value,
+   };
+   try {
+      let { data } = await http.post("/users", registerObj); // JSON Request, { params : registerObj } X params 를 쓰면 get => query string
+      console.log("UsersPage: data : ");
+      console.log(data.result);
 
-    console.log(data)
-    if (data.result == 1) {
-      router.push('/login')
-    }
-  } catch (error) {
-    console.log(error)
-  }
+      alert('회원가입을 축하합니다. 로그인 페이지로 이동합니다.');
+      router.push("/login");
+      // let $this = this;
+      // $alertify.alert("회원가입을 축하합니다. 로그인 페이지로 이동합니다", function () {
+      //    $$router.push("/login");
+      // });
+   } catch (error) {
+      console.log("UsersPage: error : ");
+      console.log(error);
+      // $alertify.error("서버에 문제가 발생했습니다.");
+      alert('서버에 문제가 발생했습니다.')
+   }
 }
 
-// const getCodeList = async () => {
-//   let params= {
-//     groupCode:groupCode, // non reactive
-//   }
-//   try {
-//     let { data } = await http.post('/users', {
-//       userName: userName.value,
-//       userPassword: userPassword.value,
-//       userEmail: userEmail.value,
-//       userClsf: userClsf.value
-//     })
+const validateUserName = () => {
+   isUserNameValid.value = userName.value.length > 0 ? true : false;
+   console.log(isUserNameValid.value);
+}
+const validateEmail = () => {
+   // ^ 시작일치, $ 끝 일치
+   // {2, 3} 2개 ~ 3개
+   // * 0회 이상, + 1회 이상
+   // [-_.] - 또는 _ 또는 .
+   // ? 없거나 1회
+   let regexp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+   isUserEmailValid.value = regexp.test(userEmail.value) ? true : false;
+   console.log(isUserEmailValid.value);
+}
+const validatePassword = () => {
+   let patternEngAtListOne = new RegExp(/[a-zA-Z]+/); // + for at least one
+   let patternSpeAtListOne = new RegExp(/[~!@#$%^&*()_+|<>?:{}]+/); // + for at least one
+   let patternNumAtListOne = new RegExp(/[0-9]+/); // + for at least one
 
-//     console.log(data)
-//     if (data.result == 1) {
-//       router.push('/login')
-//     }
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
-
-async function getCodeList() {
-  let params = {
-    groupCode: groupCode // non reactive
-  }
-  try {
-    let { data } = await http.get('/codes', { params })
-
-    console.log(data)
-    codeList.value = data
-  } catch (error) {
-    console.log(error)
-  }
+   isUserPasswordValid.value = 
+      patternEngAtListOne.test(userPassword.value) && 
+      patternSpeAtListOne.test(userPassword.value) && 
+      patternNumAtListOne.test(userPassword.value) && 
+      userPassword.value.length >= 8 ? true : false;
+}
+const validatePassword2 = () => {
+   isUserPassword2Valid.value = userPassword.value == userPassword2.value ? true : false;
 }
 
-getCodeList()
+getCodeList();
 </script>

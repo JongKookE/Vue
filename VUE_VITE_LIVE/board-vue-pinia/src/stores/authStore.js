@@ -1,19 +1,24 @@
 import { reactive } from 'vue'
 import { defineStore } from 'pinia'
 
-import notloginUserProfileImageUrl from '@/assets/noProfile.png'
+import http from '@/common/axios.js'
+import notLoginUserProfileImageUrl from '@/assets/noProfile.png'
+
 export const useAuthStore = defineStore('authStore', () => {
-  //로그인 여부, 사용자 이름, 프로필 이미지, 로그인 항목
-
+  console.log(notLoginUserProfileImageUrl)
   const authStore = reactive({
+    // NavBar
     isLogin: false,
-    userName: '',
-    userProfileImageUrl: notloginUserProfileImageUrl,
-    userEmail: '종국@com',
-    userPassword: '1234'
-  })
-  //로그인 후 변경
 
+    userName: '',
+    userProfileImageUrl: notLoginUserProfileImageUrl,
+
+    // Login
+    userEmail: 'email1',
+    userPassword: 'pwd1'
+  })
+
+  // getter 는 생략 직접 사용하는 걸로
   const setLogin = (payload) => {
     sessionStorage.setItem('isLogin', 'true')
     sessionStorage.setItem('userName', payload.userName)
@@ -24,6 +29,19 @@ export const useAuthStore = defineStore('authStore', () => {
     authStore.userProfileImageUrl = payload.userProfileImageUrl
     // console.log(authStore)
   }
+
+  const logout = async () => {
+    try {
+      let { data } = await http.get('/logout')
+
+      if (data.result == 'success') {
+        setLogout()
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const setLogout = () => {
     sessionStorage.removeItem('isLogin')
     sessionStorage.removeItem('userName')
@@ -31,7 +49,7 @@ export const useAuthStore = defineStore('authStore', () => {
 
     authStore.isLogin = false
     authStore.userName = ''
-    authStore.userProfileImageUrl = payload.userProfileImageUrl
+    authStore.userProfileImageUrl = notLoginUserProfileImageUrl
   }
 
   return { authStore, setLogin, setLogout }

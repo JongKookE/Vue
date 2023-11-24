@@ -1,8 +1,10 @@
-import axios from 'axios'
+import axios from "axios";
+
+// axios 객체 생성
 export default axios.create({
-  baseURL: 'http://localhost:8080/',
-  header: {
-    'Content-Type': 'application/json'
-  },
-  withCredentials: true // session 사용
-})
+   baseURL: "http://localhost:8080",
+   headers: {
+      "Content-Type": "application/json",
+   },
+   withCredentials: true,
+});
